@@ -1,4 +1,4 @@
-package com.srccodes.example;
+package com;
 
 public class node {
 	

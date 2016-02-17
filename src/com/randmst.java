@@ -1,4 +1,4 @@
-package com.srccodes.example;
+package com;
 
 import java.util.Random;
 import java.util.ArrayList;
