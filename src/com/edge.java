@@ -8,7 +8,7 @@ public class edge {
 	public node secondNode = null;
 	public double weight;
 	
-	public static void main(String[] args) {        
+	public edge() {
 		
 	}
 	
@@ -33,21 +33,20 @@ public class edge {
 		double weight;
 		
 		if (firstNode.z == -1) {
-			weight = Math.abs(firstNode.x - secondNode.x) + 
-					 Math.abs(firstNode.y - secondNode.y);
-		}
-		else if (firstNode.z1 == -1) {
-			weight = Math.abs(firstNode.x - secondNode.x) + 
-					 Math.abs(firstNode.y - secondNode.y) + 
-					 Math.abs(firstNode.z - secondNode.z);
-		}
-		else {
-			weight = Math.abs(firstNode.x - secondNode.x) + 
-					 Math.abs(firstNode.y - secondNode.y) + 
-					 Math.abs(firstNode.z - secondNode.z) +
-					 Math.abs(firstNode.z1 - secondNode.z1);
-			
-		}
+            weight = Math.sqrt(Math.pow(Math.abs(firstNode.x - secondNode.x), 2) + 
+                     Math.pow(Math.abs(firstNode.y - secondNode.y), 2));
+        }
+        else if (firstNode.z1 == -1) {
+            weight = Math.sqrt(Math.pow(Math.abs(firstNode.x - secondNode.x), 2) + 
+                     Math.pow(Math.abs(firstNode.y - secondNode.y), 2) +
+                     Math.pow(Math.abs(firstNode.z - secondNode.z), 2));
+        }
+        else {
+            weight = Math.sqrt(Math.pow(Math.abs(firstNode.x - secondNode.x), 2) + 
+                     Math.pow(Math.abs(firstNode.y - secondNode.y), 2) +
+                     Math.pow(Math.abs(firstNode.z - secondNode.z), 2) +
+                     Math.pow(Math.abs(firstNode.z1 - secondNode.z1), 2));
+        }
 		
 		return weight;
 	}
