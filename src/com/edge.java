@@ -1,6 +1,6 @@
 package com;
 
-import java.lang.*;
+import java.lang.Math;
 
 public class edge {
 	
@@ -47,7 +47,6 @@ public class edge {
                      Math.pow(Math.abs(firstNode.z - secondNode.z), 2) +
                      Math.pow(Math.abs(firstNode.z1 - secondNode.z1), 2));
         }
-		
 		return weight;
 	}
 }
