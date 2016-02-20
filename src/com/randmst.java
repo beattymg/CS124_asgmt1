@@ -41,26 +41,35 @@ public class randmst {
 	public static void createGraph(int n, int dimension) {
 		
 		Random r = new Random();
+		double randomEdgeCutoff = 1.6877*Math.pow(n, -0.732);
+		double squareEdgeCutoff = 2.3983*Math.pow(n,  -0.502);
+		double cubeEdgeCutoff = 1.3454*Math.pow(n, -0.282);
+		double hypercubeEdgeCutoff = 1.7136*Math.pow(n, -0.257);
+		System.out.println(randomEdgeCutoff);
 		
 		switch (dimension) {
         case 0: for (int i = 0; i < n; i++) {
 					nodeList.add(new node(i));
 				}
-        
-				for (node node : nodeList) {
-					for (node other_node : nodeList) {
-						edgeList.add(new edge(node, other_node, r.nextDouble()));
-					}
-				}
+        	
+        		for (int i = 0; i < nodeList.size(); i++) {
+        			for (int j = i+1; j < nodeList.size(); j++) {
+        			double edgeWeight = r.nextDouble();
+					if (edgeWeight < randomEdgeCutoff)
+						edgeList.add(new edge(nodeList.get(i), nodeList.get(j), edgeWeight));
+        			}
+        		}
                 break;
                 
         case 2: for (int i = 0; i < n; i++) {
 					nodeList.add(new node(r.nextDouble(), r.nextDouble(), i));
 				}
-		
-				for (node node : nodeList) {
-					for (node other_node : nodeList) {
-						edgeList.add(new edge(node, other_node));
+			
+        		for (int i = 0; i < nodeList.size(); i++) {
+        			for (int j = i+1; j < nodeList.size(); j++) {
+						if (Math.sqrt(Math.pow(Math.abs(nodeList.get(i).x - nodeList.get(j).x), 2) + 
+								Math.pow(Math.abs(nodeList.get(i).y - nodeList.get(j).y), 2)) < squareEdgeCutoff)
+						edgeList.add(new edge(nodeList.get(i), nodeList.get(j)));	
 					}
 				}
 		        break;
@@ -69,9 +78,12 @@ public class randmst {
 					nodeList.add(new node(r.nextDouble(), r.nextDouble(), r.nextDouble(), i));
 				}
 		
-				for (node node : nodeList) {
-					for (node other_node : nodeList) {
-						edgeList.add(new edge(node, other_node));
+		        for (int i = 0; i < nodeList.size(); i++) {
+					for (int j = i+1; j < nodeList.size(); j++) {
+						if (Math.sqrt(Math.pow(Math.abs(nodeList.get(i).x - nodeList.get(j).x), 2) + 
+								Math.pow(Math.abs(nodeList.get(i).y - nodeList.get(j).y), 2) + 
+								Math.pow(Math.abs(nodeList.get(i).z - nodeList.get(j).z), 2)) < cubeEdgeCutoff)
+						edgeList.add(new edge(nodeList.get(i), nodeList.get(j)));	
 					}
 				}
 		        break;
@@ -80,9 +92,13 @@ public class randmst {
 					nodeList.add(new node(r.nextDouble(), r.nextDouble(), r.nextDouble(), r.nextDouble(), i));
 				}
 		
-				for (node node : nodeList) {
-					for (node other_node : nodeList) {
-						edgeList.add(new edge(node, other_node));
+		        for (int i = 0; i < nodeList.size(); i++) {
+					for (int j = i+1; j < nodeList.size(); j++) {
+						if (Math.sqrt(Math.pow(Math.abs(nodeList.get(i).x - nodeList.get(j).x), 2) + 
+								Math.pow(Math.abs(nodeList.get(i).y - nodeList.get(j).y), 2) + 
+								Math.pow(Math.abs(nodeList.get(i).z - nodeList.get(j).z), 2) + 
+								Math.pow(Math.abs(nodeList.get(i).z1 - nodeList.get(j).z1), 2)) < hypercubeEdgeCutoff)
+						edgeList.add(new edge(nodeList.get(i), nodeList.get(j)));	
 					}
 				}
 		        break;
@@ -192,9 +208,12 @@ public class randmst {
  
         // print the contents of result[] to display the built MST
         System.out.println("Following are the edges in the constructed MST");
+        //double largest_edge = result[0].weight;
         for (i = 0; i < e; ++i)
-            System.out.println(result[i].firstNode.id+" -- "+result[i].secondNode.id+" == "+
-                               result[i].weight);
+            //System.out.println(result[i].firstNode.id+" -- "+result[i].secondNode.id+" == "+
+            //                   result[i].weight);
+        	System.out.println(result[i].weight);
+        
     }
 	
 }
