@@ -19,8 +19,9 @@ public class randmst {
 	public static ArrayList<node> nodeList = new ArrayList<node>();
 	public static ArrayList<edge> edgeList = new ArrayList<edge>();
 	public static ArrayList<subset> subsetList = new ArrayList<subset>();
+	public static ArrayList<Double> masterout = new ArrayList<Double>();
 	
-	public static int V, E;    // V-> no. of vertices & E->no.of edges
+	public static int V, E, T;    // V-> no. of vertices & E->no.of edges
 	
 	
 	public static void main(String args[]) {
@@ -28,12 +29,25 @@ public class randmst {
 		int numtrails = Integer.parseInt(args[2]);
 		int dimension = Integer.parseInt(args[3]);
 		
+		T = numtrails;
 		V = numpoints;
 		E = V -1;
 		
-		createGraph(numpoints, dimension);
-		KruskalMST();
+		for (int i = 0; i < T; i++) {
+			createGraph(numpoints, dimension);
+			KruskalMST();
+			edgeList.clear();
+	        nodeList.clear();
+	        subsetList.clear();
+		}
 		
+		double total = 0;
+		double avg;
+		int n = masterout.size();
+		for (int i = 0; i < n; i++)
+			total += masterout.get(i);
+		avg = ((double) total) / n;
+		System.out.println(avg);
 		
      }
 		
@@ -41,11 +55,12 @@ public class randmst {
 	public static void createGraph(int n, int dimension) {
 		
 		Random r = new Random();
-		double randomEdgeCutoff = 1.6877*Math.pow(n, -0.732);
+		// double randomEdgeCutoff = 1.6877*Math.pow(n, -0.732);
+		double randomEdgeCutoff = 3.5*Math.pow(n, -0.732);
 		double squareEdgeCutoff = 2.3983*Math.pow(n,  -0.502);
 		double cubeEdgeCutoff = 1.3454*Math.pow(n, -0.282);
 		double hypercubeEdgeCutoff = 1.7136*Math.pow(n, -0.257);
-		System.out.println(randomEdgeCutoff);
+		// System.out.println(randomEdgeCutoff);
 		
 		switch (dimension) {
         case 0: for (int i = 0; i < n; i++) {
@@ -205,14 +220,21 @@ public class randmst {
             }
             // Else discard the next_edge
         }
- 
+        
+        double sum = 0;
+		for (int x = 0; x < e; x++)
+			sum += result[x].weight;
+        masterout.add(sum);
+        // System.out.println(sum);
         // print the contents of result[] to display the built MST
-        System.out.println("Following are the edges in the constructed MST");
+        // System.out.println("Following are the edges in the constructed MST");
         //double largest_edge = result[0].weight;
-        for (i = 0; i < e; ++i)
+        // for (i = 0; i < e; ++i)
             //System.out.println(result[i].firstNode.id+" -- "+result[i].secondNode.id+" == "+
             //                   result[i].weight);
-        	System.out.println(result[i].weight);
+        	// System.out.println(result[i].weight);
+        
+        
         
     }
 	
